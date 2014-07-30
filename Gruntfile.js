@@ -6,7 +6,7 @@ module.exports = function (grunt) {
       options: {
         jshintrc: true
       },
-      all: ['Gruntfile.js', 'src/js/**/*.js', 'test/**/*.js']
+      all: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
     },
     mocha: {
       options: {
@@ -15,42 +15,12 @@ module.exports = function (grunt) {
       },
       all: ['test/**/*.js']
     },
-    copy: {
-      dist: {
-        expand: true,
-        flatten: true,
-        src: 'src/{css,html}/**/*',
-        filter: 'isFile',
-        dest: 'dist'
-      }
-    },
-    browserify: {
-      index: {
-        files: {
-          'dist/index.js': 'src/js/index.js'
-        }
-      }
-    },
-    clean: ['dist'],
-    'gh-pages': {
-      options: {
-        base: 'dist'
-      },
-      src: '**'
-    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-gh-pages');
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.task.renameTask('mochaTest', 'mocha');
 
   grunt.registerTask('test', ['jshint', 'mocha']);
-  grunt.registerTask('build', ['test', 'copy', 'browserify']);
-  // grunt clean
-  // grunt gh-pages
-  grunt.registerTask('default', 'build');
+  grunt.registerTask('default', 'test');
 };
