@@ -1,7 +1,7 @@
 /* global describe, it */
 'use strict';
 
-var convert = require('../src/convert');
+var convert = require('..');
 
 
 describe('Core functionality', function () {

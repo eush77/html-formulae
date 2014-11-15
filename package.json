@@ -5,7 +5,6 @@
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
 
-  "main": "src/convert.js",
   "scripts": {
     "test": "grunt test"
   },
