@@ -1,7 +1,7 @@
 Just moved from [html-formulae-app](https://github.com/eush77/html-formulae-app)!
 ---------------------------------------------------------------------------------
 
-# HTML Formul&aelig; [![Build Status][travis-badge]][travis] [![Dependency Status][david-badge]][david] [![DevDependency Status][david-dev-badge]][david-dev]
+# html-formul&aelig; [![Build Status][travis-badge]][travis] [![Dependency Status][david-badge]][david] [![DevDependency Status][david-dev-badge]][david-dev]
 
 [travis-badge]: https://travis-ci.org/eush77/html-formulae.svg
 [travis]: https://travis-ci.org/eush77/html-formulae
