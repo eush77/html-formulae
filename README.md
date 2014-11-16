@@ -1,14 +1,16 @@
 Just moved from [html-formulae-app](https://github.com/eush77/html-formulae-app)!
 ---------------------------------------------------------------------------------
 
-# html-formul&aelig; [![Build Status][travis-badge]][travis] [![Dependency Status][david-badge]][david] [![DevDependency Status][david-dev-badge]][david-dev]
+# html-formul&aelig; [![Build Status][travis-badge]][travis] [![Code Climate][codeclimate-badge]][codeclimate] [![Dependency Status][david-badge]][david]
 
-[travis-badge]: https://travis-ci.org/eush77/html-formulae.svg
+[![npm](https://nodei.co/npm/html-formulae.png)](https://nodei.co/npm/html-formulae/)
+
 [travis]: https://travis-ci.org/eush77/html-formulae
-[david-badge]: https://david-dm.org/eush77/html-formulae.png
+[travis-badge]: https://travis-ci.org/eush77/html-formulae.svg
+[codeclimate]: https://codeclimate.com/github/eush77/html-formulae
+[codeclimate-badge]: https://codeclimate.com/github/eush77/html-formulae/badges/gpa.svg
 [david]: https://david-dm.org/eush77/html-formulae
-[david-dev-badge]: https://david-dm.org/eush77/html-formulae/dev-status.png
-[david-dev]: https://david-dm.org/eush77/html-formulae#info=devDependencies
+[david-badge]: https://david-dm.org/eush77/html-formulae.png
 
 **tl;dr**: HTML Formul&aelig; translates formulas in lightweight TeX-inspired syntax to HTML.
 
