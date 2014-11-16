@@ -13,7 +13,7 @@
 
 It is designed to be:
 
-* **readable**, say markdown for formulas);
+* **readable**, say markdown for formulas;
 * **lightweight**, it should not take much to start using it in no time;
 * **flexible**, plain HTML entities and tags should be supported, too.
 
@@ -21,7 +21,7 @@ Some features (dashes, quotation marks, whitespace) also make `html-formulae` su
 
 ## Example
 
-```latex
+```
 \&forall;(x,y)\&isin;setR^2:␣␣[y>0.&.(x!=0.||.y=1)]<=>[\&exist;a>0:.a^x=y]
 ```
 
@@ -36,7 +36,7 @@ compiles down to:
 ## Syntax
 
 1. `\` escapes.
-2. `^` and '_' stand for superscript and subscript, TeX-style grouping (`{}`) are supported. Example: `x^{x_0}` is rendered as x<sup>x<sub>0</sub></sup>.
+2. `^` and '_' stand for superscript and subscript, TeX-style grouping (`{}`) is supported. Example: `x^{x_0}` is rendered as x<sup>x<sub>0</sub></sup>.
 3. Newlines are autoencoded to `<br/>`.
 4. There is also some built-in logic that protects hyphens in compound words from being interpreted as minuses, same for `TT` and `BB`.
 5. Some characters come with some spacing around: `<=>`, `=>`, `=<`, `<==>`, `==>`, `==<`, ']]`.
