@@ -183,7 +183,17 @@ var convert = (function () {
     '^': surroundByTag('sup')
   };
 
-  return function (code) {
+  /**
+   * Parse the input as html-formulae code and construct HTML output.
+   *
+   * @arg {string} code
+   * @arg {Object} [options]
+   * @property {string} [wrap] - Tag to wrap the output in. Wrapping is disabled by default.
+   * @return {string}
+   */
+  return function (code, options) {
+    options = options || {};
+
     preConvertHooks.forEach(function (hook) {
       code = hook(code);
     });
@@ -222,6 +232,11 @@ var convert = (function () {
     postConvertHooks.forEach(function (hook) {
       code = hook(code);
     });
+
+    if (options.wrap != null) {
+      code = surroundByTag(options.wrap)(code);
+    }
+
     return code;
   };
 }());
