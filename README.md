@@ -1,6 +1,3 @@
-Just moved from [html-formulae-app](https://github.com/eush77/html-formulae-app)!
----------------------------------------------------------------------------------
-
 # html-formul&aelig; [![Build Status][travis-badge]][travis] [![Code Climate][codeclimate-badge]][codeclimate] [![Dependency Status][david-badge]][david]
 
 [![npm](https://nodei.co/npm/html-formulae.png)](https://nodei.co/npm/html-formulae/)
@@ -12,29 +9,70 @@ Just moved from [html-formulae-app](https://github.com/eush77/html-formulae-app)
 [david]: https://david-dm.org/eush77/html-formulae
 [david-badge]: https://david-dm.org/eush77/html-formulae.png
 
-**tl;dr**: HTML Formul&aelig; translates formulas in lightweight TeX-inspired syntax to HTML.
+`html-formulae` is a mini-language for describing mathematical formulas that compiles to HTML.
+
+It is designed to be:
+
+* **readable**, say markdown for formulas);
+* **lightweight**, it should not take much to start using it in no time;
+* **flexible**, plain HTML entities and tags should be supported, too.
+
+Some features (dashes, quotation marks, whitespace) also make `html-formulae` suitable for plain text.
 
 ## Example
-Suppose you have to input the following formula in HTML:
 
-> &forall;(x,y)&isin;&#8477;<sup>2</sup>:&ensp;[y&gt;0&thinsp;&amp;&thinsp;(x&ne;0&thinsp;&or;&thinsp;y=1)]&thinsp;&hArr;&thinsp;[&exist;a&gt;0:&thinsp;a<sup>x</sup>=y]
+```latex
+\&forall;(x,y)\&isin;setR^2:␣␣[y>0.&.(x!=0.||.y=1)]<=>[\&exist;a>0:.a^x=y]
+```
 
-The following piece of code is one you probably should use in this case:
+compiles down to:
 
-    \&forall;(x,y)\&isin;setR^2:␣␣[y>0.&.(x!=0.||.y=1)]<=>[\&exist;a>0:.a^x=y]
+```html
+&forall;(x,y)&isin;&#8477;<sup>2</sup>:&ensp;[y&gt;0&thinsp;&amp;&thinsp;(x&ne;0&thinsp;&or;&thinsp;y=1)]&thinsp;&hArr;&thinsp;[&exist;a&gt;0:&thinsp;a<sup>x</sup>=y]
+```
 
-Quite straightforward, right?
+&forall;(x,y)&isin;&#8477;<sup>2</sup>:&ensp;[y&gt;0&thinsp;&amp;&thinsp;(x&ne;0&thinsp;&or;&thinsp;y=1)]&thinsp;&hArr;&thinsp;[&exist;a&gt;0:&thinsp;a<sup>x</sup>=y]
 
-Now look at generated HTML for this simple line. You should be extremely patient to write it by hand!
+## Syntax
 
-    <p>&forall;(x,y)&isin;&#8477;<sup>2</sup>:&ensp;[y&gt;0&thinsp;&amp;&thinsp;(x&ne;0&thinsp;&or;&thinsp;y=1)]&thinsp;&hArr;&thinsp;[&exist;a&gt;0:&thinsp;a<sup>x</sup>=y]</p>
+1. `\` escapes.
+2. `^` and '_' stand for superscript and subscript, TeX-style grouping (`{}`) are supported. Example: `x^{x_0}` is rendered as x<sup>x<sub>0</sub></sup>.
+3. Newlines are autoencoded to `<br/>`.
+4. There is also some built-in logic that protects hyphens in compound words from being interpreted as minuses, same for `TT` and `BB`.
+5. Some characters come with some spacing around: `<=>`, `=>`, `=<`, `<==>`, `==>`, `==<`, ']]`.
 
-## Features
-Two main features of &ldquo;HTML Formul&aelig;&rdquo; include subscript/superscript rendering and character sequences replacement. The syntax for the former one is pretty much the same as in LaTeX document preparation system and supports arbitrary levels of nesting.
+The complete table of symbols:
 
-Replacement table available laid out in the interface page include sequences for various mathematic symbols and punctuation marks. Punctuation marks include dashes (em-dash and en-dash), quotes (both double and angle marks), and whitespace characters (em-space, en-space, thin-space), which can make &ldquo;HTML Formul&aelig;&rdquo; suitable for plain text editing of HTML-encoded texts.
+Sequence                                                           | Description
+:----------------------------------------------------------------: | -----------
+`mbscriptA`&ndash;`mbscriptZ`, `mbscripta`&ndash;`mbscriptz`       | Mathematical bold script letters: &#x1d4d0;&ndash;&#x1d4e9;, &#x1d4ea;&ndash;&#x1d503;
+`setP`, `setN`, `setZ`, `setQ`, `setR`, `setC`, `setF`             | Abstract and common number sets: &#8473;, &#8469;, &#8484;, &#8474;, &#8477;, &#8450;, &#120125;
+`+`, `-`, `*`, `/`, `&&`, `||`, `!`                                | Arithmetic and logical operators: +, &minus;, &sdot;, /, &and;, &or;, &not;
+`=`, `==`, `<`, `<=`, `>`, `>=`, `!=`, `/=`, `~`, `~~`, `<<`, `>>` | Comparison relations: =, &#9552;, &lt;, &le;, &gt;, &ge;, &ne;, &ne;, &sim;, &asymp;, &#8810;, &#8811;
+`<=>`, `=>`, `=<`, `<==>`, `==>`, `==<`, `|-`, `|=`, `TT`, `BB`    | Inference relations and constants: &hArr;, &rArr;, &lArr;, &#10234;, &#10233;, &#10232;, &#8866;, &#8872;, &#8868;, &perp;
+`<->`, `->`, `<-`, `<-->`, `-->`, `<--`                            | Other arrows: &harr;, &rarr;, &larr;, &#10231;, &#10230;, &#10229;
+`]]`, `:=`, `=def=`                                                | &ldquo;Let&rdquo; and defining signs: &#8848;, &#8788;, &#8797;
+`+-`, `-+`, `&amp;`, `oo`                                          | Various symbols: &plusmn;, &#8723; &amp;, &infin;
+`---`, `--`                                                        | Dashes (em-dash, en-dash): &mdash;, &ndash;
+`ˋˋ`, `''`, `<<<`, `>>>`                                           | Quotation marks: &ldquo;, &rdquo;, &laquo;, &raquo;
+`␣␣␣`, `␣␣`, `.`                                                   | Whitespace sequences: em-space, en-space, thin-space
 
-HTML tags and entities could also be taken into play (if properly escaped). You may notice some of those in the example above, e.g. `\&forall;`.
+Note: backticks and spaces in the table above are replaced with other similar-looking (visible) characters.
 
-### History
-Formulas can be saved and restored via the interface button or keyboard shortcut (<kbd>Ctrl</kbd>+<kbd>Enter</kbd>). Saved formulas are preserved between sessions in LocalStorage.
+## HTML
+
+HTML is also supported, but must be properly escaped.
+
+For example, `\&forall;` and `\&exist;` are rather commonly used entities, check the complete [list](https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references "List of HTML entities").
+
+Another example: `\<b\>bold\</b\>`.
+
+## Install
+
+```shell
+npm install html-formulae
+```
+
+## License
+
+MIT
