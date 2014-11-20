@@ -4,11 +4,10 @@
   "description": "Formula converter for HTML",
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
-
+  "main": "src/convert.js",
   "scripts": {
     "test": "grunt test"
   },
-
   "homepage": "https://github.com/eush77/html-formulae",
   "readme": "See https://github.com/eush77/html-formulae for the main project's README.",
   "repository": {
@@ -26,8 +25,8 @@
     "html",
     "entities"
   ],
-
   "dependencies": {
+    "extend": "^2.0.0",
     "lodash.template": "^2.4.1"
   },
   "devDependencies": {

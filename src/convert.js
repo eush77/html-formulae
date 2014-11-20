@@ -1,82 +1,8 @@
 'use strict';
 
-var _ = {
-  template: require('lodash.template')
-};
+var symtable = require('./symtable');
 
-
-var replaceDict = {
-  '<': '&lt;',
-  '<=': '&le;',
-  '>': '&gt;',
-  '>=': '&ge;',
-  '!=': '&ne;',
-  '/=': '&ne;',
-  '==': '&#9552;',
-  '<<': '&#8810;',
-  '>>': '&#8811;',
-  '<=>': '&thinsp;&hArr;&thinsp;',
-  '=>': '&thinsp;&rArr;&thinsp;',
-  '=<': '&thinsp;&lArr;&thinsp;',
-  '<==>': '&thinsp;&#10234;&thinsp;',
-  '==>': '&thinsp;&#10233;&thinsp;',
-  '==<': '&thinsp;&#10232;&thinsp;',
-  '<->': '&harr;',
-  '->': '&rarr;',
-  '<-': '&larr;',
-  '<-->': '&#10231;',
-  '-->': '&#10230;',
-  '<--': '&#10229;',
-  '   ': '&emsp;',
-  '  ': '&ensp;',
-  '.': '&thinsp;',
-  '*': '&sdot;',
-  '-': '&minus;',
-  '&': '&amp;',
-  '+-': '&plusmn;',
-  '-+': '&#8723;',
-  'setP': '&#8473;',
-  'setN': '&#8469;',
-  'setZ': '&#8484;',
-  'setQ': '&#8474;',
-  'setR': '&#8477;',
-  'setC': '&#8450;',
-  'setF': '&#120125;',
-  '~': '&sim;',
-  'oo': '&infin;',
-  '\n': '<br/>',
-  '--': '&ndash;',
-  '---': '&mdash;',
-  '``': '&ldquo;',
-  '\'\'': '&rdquo;',
-  '<<<': '&laquo;',
-  '>>>': '&raquo;',
-  '||': '&or;',
-  '&&': '&and;',
-  '!': '&not;',
-  ':=': '&#8788;',
-  '=def=': '&#8797;',
-  '~~': '&asymp;',
-  ']]': '&#8848; ',
-  '|-': '&#8866;',
-  '|=': '&#8872;',
-  'TT': '&#8868;',
-  'BB': '&perp;',
-};
-
-
-(function installMathematicalBoldScriptLetters(dict) {
-  var installAlphabet = function (mnemonicPrefix, aScriptCode, aRegularCode, size) {
-    size = size || 26; // Latin by default
-    for (var letterIndex = 0; letterIndex < size; ++letterIndex) {
-      var mnemonic = mnemonicPrefix + String.fromCharCode(aRegularCode + letterIndex);
-      var html = ['&#x', (aScriptCode + letterIndex).toString(0x10), ';'].join('');
-      dict[mnemonic] = html;
-    }
-  };
-  installAlphabet('mbscript', 0x1d4d0, 'A'.charCodeAt());
-  installAlphabet('mbscript', 0x1d4ea, 'a'.charCodeAt());
-}(replaceDict));
+var template = require('lodash.template');
 
 
 var preConvertHooks = [
@@ -84,14 +10,14 @@ var preConvertHooks = [
     var letterBlock = '[a-zA-Z\']{2,}';
     var beginBlock = '(``)?';
     var endBlock = '[,:)!?;"]?';
-    var wordRegex = new RegExp(_.template('^${begin}' +
-                                          '(${letters}-)+${letters}' +
-                                          '${end}$',
-                                          {
-                                            letters: letterBlock,
-                                            begin: beginBlock,
-                                            end: endBlock
-                                          }));
+    var wordRegex = new RegExp(template('^${begin}' +
+                                        '(${letters}-)+${letters}' +
+                                        '${end}$',
+                                        {
+                                          letters: letterBlock,
+                                          begin: beginBlock,
+                                          end: endBlock
+                                        }));
     return code.replace(/\S+/g, function (word) {
       return wordRegex.test(word) ? word.replace(/-/g, '\\$&') : word;
     });
@@ -100,8 +26,8 @@ var preConvertHooks = [
   function skipRegularLetterDoubling(code) {
     var inTextReplacePattern = '$1\\$2';
     ['T', 'B'].forEach(function (char) {
-      var regexLeft = new RegExp(_.template('(\\w${c})(${c})', {c: char}), 'g');
-      var regexRight = new RegExp(_.template('(${c})(${c}\\w)', {c: char}), 'g');
+      var regexLeft = new RegExp(template('(\\w${c})(${c})', {c: char}), 'g');
+      var regexRight = new RegExp(template('(${c})(${c}\\w)', {c: char}), 'g');
       code = code.replace(regexLeft, inTextReplacePattern)
       .replace(regexRight, inTextReplacePattern);
     });
@@ -119,17 +45,16 @@ var preConvertHooks = [
   },
 ];
 
-
 var postConvertHooks = [];
 
 
-// Replace character sequences according to replaceDict
+// Replace character sequences according to the symbol table.
 var replace = (function () {
 
-  // Split replaceDict into groups by key length (= replace priority)
+  // Split symtable into groups by key length (= replace priority).
   var replaceBase = (function () {
     var base = [];
-    for (var seq in replaceDict) {
+    for (var seq in symtable) {
       var key = seq.length;
       if (!(key in base)) {
         base[key] = {
@@ -137,7 +62,7 @@ var replace = (function () {
           dict: {}
         };
       }
-      base[key].dict[seq] = replaceDict[seq];
+      base[key].dict[seq] = symtable[seq];
     }
     return base.filter(Boolean).reverse(); // Compress and reverse
   }());
@@ -174,8 +99,11 @@ var replace = (function () {
 // Recursive descent parser
 var convert = (function () {
   var surroundByTag = function (tag) {
-    var template = _.template('<${tag}><% print("${string}") %></${tag}>', {tag: tag});
-    return _.template(template, null, {variable: 'string'});
+    return template(
+      template('<${tag}><% print("${string}") %></${tag}>', { tag: tag }),
+      null,
+      { variable: 'string' }
+    );
   };
 
   var curlies = {
