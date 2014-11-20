@@ -5,6 +5,7 @@
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
   "main": "src/convert.js",
+  "bin": "bin/cli.js",
   "scripts": {
     "test": "grunt test"
   },
@@ -27,7 +28,8 @@
   ],
   "dependencies": {
     "extend": "^2.0.0",
-    "lodash.template": "^2.4.1"
+    "lodash.template": "^2.4.1",
+    "parse-concat-stream": "^0.1.1"
   },
   "devDependencies": {
     "should": "^4.0.4",
