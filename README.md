@@ -47,9 +47,9 @@ Sequence                                                           | Description
 :----------------------------------------------------------------: | -----------
 `mbscriptA`&ndash;`mbscriptZ`, `mbscripta`&ndash;`mbscriptz`       | Mathematical bold script letters: &#x1d4d0;&ndash;&#x1d4e9;, &#x1d4ea;&ndash;&#x1d503;
 `setP`, `setN`, `setZ`, `setQ`, `setR`, `setC`, `setF`             | Abstract and common number sets: &#8473;, &#8469;, &#8484;, &#8474;, &#8477;, &#8450;, &#120125;
-`+`, `-`, `*`, `/`, `&&`, `||`, `!`                                | Arithmetic and logical operators: +, &minus;, &sdot;, /, &and;, &or;, &not;
+`+`, `-`, `*`, `/`, `&&`, `ǀǀ`, `!`                                | Arithmetic and logical operators: +, &minus;, &sdot;, /, &and;, &or;, &not;
 `=`, `==`, `<`, `<=`, `>`, `>=`, `!=`, `/=`, `~`, `~~`, `<<`, `>>` | Comparison relations: =, &#9552;, &lt;, &le;, &gt;, &ge;, &ne;, &ne;, &sim;, &asymp;, &#8810;, &#8811;
-`<=>`, `=>`, `=<`, `<==>`, `==>`, `==<`, `|-`, `|=`, `TT`, `BB`    | Inference relations and constants: &hArr;, &rArr;, &lArr;, &#10234;, &#10233;, &#10232;, &#8866;, &#8872;, &#8868;, &perp;
+`<=>`, `=>`, `=<`, `<==>`, `==>`, `==<`, `ǀ-`, `ǀ=`, `TT`, `BB`    | Inference relations and constants: &hArr;, &rArr;, &lArr;, &#10234;, &#10233;, &#10232;, &#8866;, &#8872;, &#8868;, &perp;
 `<->`, `->`, `<-`, `<-->`, `-->`, `<--`                            | Other arrows: &harr;, &rarr;, &larr;, &#10231;, &#10230;, &#10229;
 `]]`, `:=`, `=def=`                                                | &ldquo;Let&rdquo; and defining signs: &#8848;, &#8788;, &#8797;
 `+-`, `-+`, `&amp;`, `oo`                                          | Various symbols: &plusmn;, &#8723; &amp;, &infin;
@@ -57,7 +57,7 @@ Sequence                                                           | Description
 `ˋˋ`, `''`, `<<<`, `>>>`                                           | Quotation marks: &ldquo;, &rdquo;, &laquo;, &raquo;
 `␣␣␣`, `␣␣`, `.`                                                   | Whitespace sequences: em-space, en-space, thin-space
 
-Note: backticks and spaces in the table above are replaced with other similar-looking (visible) characters.
+Note: backticks, pipes and spaces in the table above are replaced with other similar-looking (visible) characters.
 
 ### HTML
 
@@ -73,7 +73,7 @@ Another example: `\<b\>bold\</b\>`.
 
 Compile `code` to HTML.
 
-The function is wrapped with [dyn-curry](https://www.npmjs.org/package/dyn-curry), so you can fix options and get the converter function back:
+The function is curried with [dyn-curry](https://www.npmjs.org/package/dyn-curry), so you can fix options and get the converter function back:
 
 ```js
 var converter = htmlFormulae(options);
