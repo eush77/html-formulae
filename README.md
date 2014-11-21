@@ -19,6 +19,8 @@ It is designed to be:
 
 Some features (dashes, quotation marks, whitespace) also make `html-formulae` suitable for plain text.
 
+Try it: http://eush77.github.io/html-formulae-app/
+
 ## Example
 
 ```
