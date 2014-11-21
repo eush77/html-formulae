@@ -3,10 +3,27 @@
 
 var convert = require('..');
 
-var concat = require('parse-concat-stream');
+var concat = require('parse-concat-stream')
+  , parseArgs = require('minimist');
 
 
-process.stdin.pipe(concat({ parse: convert }, function (err, output) {
+var argv = parseArgs(process.argv.slice(2), {
+  alias: {
+    wrap: 'w'
+  },
+  unknown: function () {
+    console.log('Usage:  html-formulae [-w <tagname> | --wrap <tagname>]');
+    process.exit(1);
+  }
+});
+
+
+process.stdin.pipe(concat({
+  parse: convert({
+    wrap: argv.wrap
+  })
+}, function (err, output) {
   if (err) throw err;
+
   console.log(output);
 }));
