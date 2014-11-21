@@ -2,7 +2,8 @@
 
 var symtable = require('./symtable');
 
-var template = require('lodash.template');
+var template = require('lodash.template')
+  , curry = require('dyn-curry');
 
 
 var preConvertHooks = [
@@ -113,14 +114,26 @@ var convert = (function () {
 
   /**
    * Parse the input as html-formulae code and construct HTML output.
+   * Curried function.
    *
-   * @arg {string} code
    * @arg {Object} [options]
    * @property {string} [wrap] - Tag to wrap the output in. Wrapping is disabled by default.
+   * @arg {string} code
    * @return {string}
    */
-  return function (code, options) {
-    options = options || {};
+  return curry(function convert(options, code) {
+    if (arguments.length < 2) {
+      if (typeof options == 'string') {
+        code = options;
+        options = {};
+      }
+      else {
+        return curry;
+      }
+    }
+    else {
+      options = options || {};
+    }
 
     preConvertHooks.forEach(function (hook) {
       code = hook(code);
@@ -166,7 +179,7 @@ var convert = (function () {
     }
 
     return code;
-  };
+  });
 }());
 
 
