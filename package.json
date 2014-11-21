@@ -1,6 +1,6 @@
 {
   "name": "html-formulae",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Formula converter for HTML",
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
@@ -10,7 +10,6 @@
     "test": "grunt test"
   },
   "homepage": "https://github.com/eush77/html-formulae",
-  "readme": "See https://github.com/eush77/html-formulae for the main project's README.",
   "repository": {
     "type": "git",
     "url": "https://github.com/eush77/html-formulae"
@@ -19,12 +18,27 @@
     "url": "https://github.com/eush77/html-formulae/issues"
   },
   "keywords": [
+    "math",
     "formula",
     "editor",
-    "tex",
-    "latex",
     "html",
-    "entities"
+    "entities",
+    "tag",
+    "unicode",
+    "codepoint",
+    "notation",
+    "symbols",
+    "superscript",
+    "subscript",
+    "number set",
+    "operator",
+    "relation",
+    "inference",
+    "arrow",
+    "dash",
+    "quote",
+    "quotation",
+    "whitespace"
   ],
   "dependencies": {
     "dyn-curry": "^0.1.0",
