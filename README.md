@@ -59,13 +59,47 @@ Sequence                                                           | Description
 
 Note: backticks and spaces in the table above are replaced with other similar-looking (visible) characters.
 
-## HTML
+### HTML
 
 HTML is also supported, but must be properly escaped.
 
 For example, `\&forall;` and `\&exist;` are rather commonly used entities, check the complete [list](https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references "List of HTML entities").
 
 Another example: `\<b\>bold\</b\>`.
+
+## API
+
+### htmlFormulae([options], code)
+
+Compile `code` to HTML.
+
+The function is wrapped with [dyn-curry](https://www.npmjs.org/package/dyn-curry), so you can fix options and get the converter function back:
+
+```js
+var converter = htmlFormulae(options);
+converter(code); // -> HTML
+```
+
+`options.wrap` controls whether the output should be wrapped in a tag. `null` disables wrapping.
+
+```js
+> htmlFormulae('2_2')
+'2<sub>2</sub>'
+> htmlFormulae({ wrap: 'p' }, '2_2')
+'<p>2<sub>2</sub></p>'
+```
+
+| Option | Type   | Required? | Default |
+| :------| :----- | :-------: | :------ |
+| wrap   | string | No        | `null`  |
+
+## CLI
+
+`html-formulae` comes with a simple CLI.
+
+```
+Usage:  html-formulae [-w <tagname> | --wrap <tagname>]
+```
 
 ## Install
 
